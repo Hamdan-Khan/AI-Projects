@@ -21,22 +21,32 @@ def read_csv(filename):
 def analyze_data(data_dict,size):
     print("\nAnalysis of Data:\n")
 
+    # sum/n
     print("Mean of proteins (in g):  ", statistics.mean(data_dict["proteins"]))
     print("Mean of fats (in g):  ", statistics.mean(data_dict["fats"]))
     print("Mean of carbs (in g):  ", statistics.mean(data_dict["carbs"]))
     print("Mean of cals (in g):  ", statistics.mean(data_dict["cals"]))
     print("")
 
+    # most repeated val
     print("Mode of proteins (in g):  ", statistics.mode(data_dict["proteins"]))
     print("Mode of fats (in g):  ", statistics.mode(data_dict["fats"]))
     print("Mode of carbs (in g):  ", statistics.mode(data_dict["carbs"]))
     print("Mode of cals (in g):  ", statistics.mode(data_dict["cals"]))
     print("")
 
+    # mid point of data
     print("Median of proteins (in g):  ", statistics.median(data_dict["proteins"]))
     print("Median of fats (in g):  ", statistics.median(data_dict["fats"]))
     print("Median of carbs (in g):  ", statistics.median(data_dict["carbs"]))
     print("Median of cals (in g):  ", statistics.median(data_dict["cals"]))
+    print("")
+    
+    # [(xi - mean)^2 / n-1]^1/2
+    print("Standard Deviation of proteins (in g):  ", statistics.stdev(data_dict["proteins"]))
+    print("Standard Deviation of fats (in g):  ", statistics.stdev(data_dict["fats"]))
+    print("Standard Deviation of carbs (in g):  ", statistics.stdev(data_dict["carbs"]))
+    print("Standard Deviation of cals (in g):  ", statistics.stdev(data_dict["cals"]))
 
 
 # def filter_data(data, column, value):
