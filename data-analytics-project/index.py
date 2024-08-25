@@ -31,6 +31,12 @@ def analyze_data(data_dict,size):
     print("Mode of fats (in g):  ", statistics.mode(data_dict["fats"]))
     print("Mode of carbs (in g):  ", statistics.mode(data_dict["carbs"]))
     print("Mode of cals (in g):  ", statistics.mode(data_dict["cals"]))
+    print("")
+
+    print("Median of proteins (in g):  ", statistics.median(data_dict["proteins"]))
+    print("Median of fats (in g):  ", statistics.median(data_dict["fats"]))
+    print("Median of carbs (in g):  ", statistics.median(data_dict["carbs"]))
+    print("Median of cals (in g):  ", statistics.median(data_dict["cals"]))
 
 
 # def filter_data(data, column, value):
