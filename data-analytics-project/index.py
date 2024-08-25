@@ -19,13 +19,18 @@ def read_csv(filename):
 
 # fats, protein, carbs, calories
 def analyze_data(data_dict,size):
-    print("\n\n\n Analysis of Data:   \n\n\n")
+    print("\nAnalysis of Data:\n")
 
     print("Mean of proteins (in g):  ", statistics.mean(data_dict["proteins"]))
     print("Mean of fats (in g):  ", statistics.mean(data_dict["fats"]))
     print("Mean of carbs (in g):  ", statistics.mean(data_dict["carbs"]))
     print("Mean of cals (in g):  ", statistics.mean(data_dict["cals"]))
+    print("")
 
+    print("Mode of proteins (in g):  ", statistics.mode(data_dict["proteins"]))
+    print("Mode of fats (in g):  ", statistics.mode(data_dict["fats"]))
+    print("Mode of carbs (in g):  ", statistics.mode(data_dict["carbs"]))
+    print("Mode of cals (in g):  ", statistics.mode(data_dict["cals"]))
 
 
 # def filter_data(data, column, value):
