@@ -21,32 +21,29 @@ def read_csv(filename):
 def analyze_data(data_dict,size):
     print("\nAnalysis of Data:\n")
 
-    # sum/n
-    print("Mean of proteins (in g):  ", statistics.mean(data_dict["proteins"]))
-    print("Mean of fats (in g):  ", statistics.mean(data_dict["fats"]))
-    print("Mean of carbs (in g):  ", statistics.mean(data_dict["carbs"]))
-    print("Mean of cals (in g):  ", statistics.mean(data_dict["cals"]))
-    print("")
-
-    # most repeated val
-    print("Mode of proteins (in g):  ", statistics.mode(data_dict["proteins"]))
-    print("Mode of fats (in g):  ", statistics.mode(data_dict["fats"]))
-    print("Mode of carbs (in g):  ", statistics.mode(data_dict["carbs"]))
-    print("Mode of cals (in g):  ", statistics.mode(data_dict["cals"]))
-    print("")
-
-    # mid point of data
-    print("Median of proteins (in g):  ", statistics.median(data_dict["proteins"]))
-    print("Median of fats (in g):  ", statistics.median(data_dict["fats"]))
-    print("Median of carbs (in g):  ", statistics.median(data_dict["carbs"]))
-    print("Median of cals (in g):  ", statistics.median(data_dict["cals"]))
-    print("")
+    nutrients = ["proteins", "fats", "carbs", "cals"]
+    stats = ["mean", "mode", "median", "stdev"]
     
-    # [(xi - mean)^2 / n-1]^1/2
-    print("Standard Deviation of proteins (in g):  ", statistics.stdev(data_dict["proteins"]))
-    print("Standard Deviation of fats (in g):  ", statistics.stdev(data_dict["fats"]))
-    print("Standard Deviation of carbs (in g):  ", statistics.stdev(data_dict["carbs"]))
-    print("Standard Deviation of cals (in g):  ", statistics.stdev(data_dict["cals"]))
+    results = {stat: [] for stat in stats}
+
+    for nutrient in nutrients:
+        # sum/n
+        results["mean"].append(statistics.mean(data_dict[nutrient]))
+        # most repeated val
+        results["mode"].append(statistics.mode(data_dict[nutrient]))
+        # mid point of data
+        results["median"].append(statistics.median(data_dict[nutrient]))
+        # [(xi - mean)^2 / n-1]^1/2
+        results["stdev"].append(statistics.stdev(data_dict[nutrient]))
+
+    for stat in stats:
+        print(f"\n{stat.capitalize()}:")
+        for i, nutrient in enumerate(nutrients):
+            print(f"{nutrient.capitalize()} (in g): {results[stat][i]:.2f}")
+
+    return results
+
+
 
 
 # def filter_data(data, column, value):
@@ -68,7 +65,7 @@ def main():
         raise SystemExit(1)
 
     data_dict, total_num = read_csv(file_path)
-    analyze_data(data_dict,total_num)
+    results = analyze_data(data_dict,total_num)
     
 
 if __name__ == "__main__":
