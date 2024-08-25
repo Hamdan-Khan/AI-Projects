@@ -3,26 +3,43 @@ import statistics
 from pathlib import Path
 import argparse
 
-fields = []
-rows = []
-
 def read_csv(filename):
+    columns_to_keep = {'food', 'Protein', 'Caloric Value', 'Fat', 'Carbohydrates'}
+
     with open(filename, 'r') as csvfile:
-        # creating a csv reader object
-        csvreader = csv.reader(csvfile)
+        csvreader = csv.DictReader(csvfile)
+        data_list = list(csvreader)
+        filtered = []
+        for row in data_list:
+            filtered_row = {k: v for k, v in row.items() if any(k.startswith(prefix) for prefix in columns_to_keep)}
+            filtered.append(filtered_row)
+        total_num = len(data_list) - 1
 
-        # extracting field names through first row
-        fields.append(next(csvreader))
+    print("Total no. of entries:", total_num)
 
-        # extracting each data row one by one
-        for row in csvreader:
-            rows.append(row)
+    n = int(input("Enter the number of entries you want to see: "))
+    
+    if n < 1 or n > total_num:
+        print("Out of range")
+    else:
+        print(f'\nFirst {n} rows are:\n')
+        for data in filtered[:n]:
+            print(data)
 
-        # get total number of rows
-        print("Total no. of rows: %d" % (csvreader.line_num))
+    return filtered, total_num
 
-# def analyze_data(data):
-#     # Perform statistical analysis
+# fats, protein, carbs, calories
+def analyze_data(data_list,size):
+    print("\n\n\n Analysis of Data:   \n\n\n")
+    sums = {"calories":0,"protein":0,"carbs":0,"fats":0}
+    for data in data_list[:5]:
+        sums["protein"] += float(data["Protein"])
+        sums["calories"] += float(data["Caloric Value"])
+        sums["fats"] += float(data["Fat"])
+        sums["carbs"] += float(data["Carbohydrates"])
+    print("Sums: ",sums)
+    
+
 
 # def filter_data(data, column, value):
 #     # Filter data based on column and value
@@ -42,7 +59,8 @@ def main():
         print("The target directory doesn't exist")
         raise SystemExit(1)
 
-    read_csv(file_path)
+    data_list, total_num = read_csv(file_path)
+    analyze_data(data_list,total_num)
     
 
 if __name__ == "__main__":
