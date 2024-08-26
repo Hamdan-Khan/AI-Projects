@@ -10,7 +10,8 @@ def read_csv(filename):
         fats = [float(row[4]) for row in reader]
         carbs = [float(row[8]) for row in reader]
         cals = [float(row[3]) for row in reader]
-        data_dict = {"proteins":proteins,"fats":fats,"carbs":carbs,"cals":cals}
+        names = [row[2] for row in reader]
+        data_dict = {"proteins":proteins,"fats":fats,"carbs":carbs,"cals":cals,"names":names}
         total_num = len(proteins) - 1
 
     print("Total no. of entries:", total_num)
@@ -46,8 +47,12 @@ def analyze_data(data_dict,size):
 
 
 
-# def filter_data(data, column, value):
-#     # Filter data based on column and value
+def filter_data(data, column, value):
+    print(f"\nFiltering by column: {column}, value: {value}\n")
+    if value in data[column]:
+        i = data[column].index(value)
+        print(f"Nutrients of {data["names"][i]}")
+        print("\n".join(f"{key} : {data[key][i]} gm" for key in data.keys() if key != "names"))
 
 # def generate_report(analysis_results):
 #     # Generate and print a summary report
@@ -66,7 +71,10 @@ def main():
 
     data_dict, total_num = read_csv(file_path)
     results = analyze_data(data_dict,total_num)
-    
+
+    if args.filter:
+        filter_column, filter_value = args.filter
+        filter_data(data_dict,filter_column,filter_value) 
 
 if __name__ == "__main__":
     main()
