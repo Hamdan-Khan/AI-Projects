@@ -2,6 +2,8 @@ import csv
 import statistics
 from pathlib import Path
 import argparse
+from tabulate import tabulate
+
 
 def read_csv(filename):
     with open(filename, 'r') as csvfile:
@@ -18,7 +20,6 @@ def read_csv(filename):
 
     return data_dict, total_num
 
-# fats, protein, carbs, calories
 def analyze_data(data_dict,size):
     print("\nAnalysis of Data:\n")
 
@@ -26,6 +27,7 @@ def analyze_data(data_dict,size):
     stats = ["mean", "mode", "median", "stdev"]
     
     results = {stat: [] for stat in stats}
+    results["Nutrient"] = nutrients
 
     for nutrient in nutrients:
         # sum/n
@@ -44,9 +46,6 @@ def analyze_data(data_dict,size):
 
     return results
 
-
-
-
 def filter_data(data, column, value):
     print(f"\nFiltering by column: {column}, value: {value}\n")
     if value in data[column]:
@@ -54,8 +53,9 @@ def filter_data(data, column, value):
         print(f"Nutrients of {data["names"][i]}")
         print("\n".join(f"{key} : {data[key][i]} gm" for key in data.keys() if key != "names"))
 
-# def generate_report(analysis_results):
-#     # Generate and print a summary report
+def generate_report(analysis_results):
+    print(tabulate(analysis_results,headers="keys"))
+    
 
 def main():
     parser = argparse.ArgumentParser(description="Sales Data Analyzer")
@@ -75,6 +75,8 @@ def main():
     if args.filter:
         filter_column, filter_value = args.filter
         filter_data(data_dict,filter_column,filter_value) 
+    
+    generate_report(results)
 
 if __name__ == "__main__":
     main()
