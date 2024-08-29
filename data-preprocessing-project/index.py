@@ -21,9 +21,20 @@ def load_data(file_path):
     return data
 
 
-# def explore_data(df):
-#     # Display basic information about the dataset
-#     # Show summary statistics
+def explore_data(df):
+    if df.empty:
+        print("Data missing.")
+        return
+    nCols = len(df.columns)
+    nRows = int(df.size / nCols)
+    print(f"No. of columns: {nCols}")
+    print(f"No. of rows: {nRows}")
+    print("\nData Sample:")
+    print(df[:10])
+    print("\nData Types:")
+    print(df.dtypes)
+    # Show summary statistics
+
 
 # def handle_missing_values(df):
 #     # Identify and handle missing values
@@ -42,7 +53,8 @@ def load_data(file_path):
 
 
 def main():
-    load_data("megaGymDataset.csv")
+    data_frame = load_data("megaGymDataset.csv")
+    explore_data(data_frame)
 
 
 if __name__ == "__main__":
