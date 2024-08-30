@@ -16,7 +16,7 @@ def load_data(file_path):
             "Level",
             "Rating",
         ],
-        nrows=1000,
+        nrows=500,
     )
     return data
 
@@ -47,8 +47,14 @@ def explore_data(df):
         print(stats[col])
 
 
-# def handle_missing_values(df):
-#     # Identify and handle missing values
+def handle_missing_values(df):
+    df = df.copy()
+    print("\n\nBefore handling missing values:")
+    print(df.isnull().sum())
+    df["Rating"] = df["Rating"].fillna(df["Rating"].mean())
+    print("\nAfter handling missing values:")
+    print(df.isnull().sum())
+
 
 # def convert_data_types(df):
 #     # Convert data types if necessary
@@ -79,7 +85,8 @@ def remove_duplicates(df):
 def main():
     data_frame = load_data("megaGymDataset.csv")
     explore_data(data_frame)
-    remove_duplicates(data_frame)
+    distinct_df = remove_duplicates(data_frame)
+    handle_missing_values(distinct_df)
 
 
 if __name__ == "__main__":
