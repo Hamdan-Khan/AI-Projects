@@ -53,8 +53,21 @@ def explore_data(df):
 # def convert_data_types(df):
 #     # Convert data types if necessary
 
-# def remove_duplicates(df):
-#     # Check for and remove duplicate entries
+
+def remove_duplicates(df):
+    columns_to_consider = df.columns[1:]
+    distinct = df.drop_duplicates(subset=columns_to_consider, keep="first")
+
+    num_duplicates_removed = len(df) - len(distinct)
+    nCols = len(distinct.columns)
+    nRows = len(distinct)
+
+    print(f"\n\nNumber of duplicates removed: {num_duplicates_removed}")
+    print(f"No. of columns after removing duplicates: {nCols}")
+    print(f"No. of rows after removing duplicates: {nRows}")
+
+    return distinct
+
 
 # def feature_engineering(df):
 #     # Create new features or transform existing ones
@@ -66,6 +79,7 @@ def explore_data(df):
 def main():
     data_frame = load_data("megaGymDataset.csv")
     explore_data(data_frame)
+    remove_duplicates(data_frame)
 
 
 if __name__ == "__main__":
