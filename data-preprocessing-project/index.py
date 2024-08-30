@@ -33,7 +33,18 @@ def explore_data(df):
     print(df[:10])
     print("\nData Types:")
     print(df.dtypes)
-    # Show summary statistics
+
+    print("\nSummary Statistics:")
+    stats = {}
+    stats["Rating"] = df["Rating"].describe()
+    for col in ["Type", "BodyPart", "Equipment", "Level"]:
+        stats[col] = df[col].value_counts(normalize=True) * 100
+    print("Numerical Summary:")
+    print(stats["Rating"])
+    print("\nCategorical Summaries (in percentages):")
+    for col in ["Type", "BodyPart", "Equipment", "Level"]:
+        print("\n")
+        print(stats[col])
 
 
 # def handle_missing_values(df):
