@@ -55,9 +55,7 @@ def handle_missing_values(df):
     print("\nAfter handling missing values:")
     print(df.isnull().sum())
 
-
-# def convert_data_types(df):
-#     # Convert data types if necessary
+    return df
 
 
 def remove_duplicates(df):
@@ -75,8 +73,26 @@ def remove_duplicates(df):
     return distinct
 
 
-# def feature_engineering(df):
-#     # Create new features or transform existing ones
+def feature_engineering(df):
+    df = df.copy()
+
+    df["Type_BodyPart"] = df["Type"] + "_" + df["BodyPart"]
+
+    df["Title_word_count"] = df["Title"].str.split().str.len()
+
+    df["Rating_category"] = pd.cut(
+        df["Rating"],
+        bins=[0, 2, 4, 6, 8, 10],
+        labels=["Very Low", "Low", "Medium", "High", "Very High"],
+        include_lowest=True,
+    )
+
+    level_map = {"Beginner": 1, "Intermediate": 2, "Advanced": 3}
+    df["Level_numeric"] = df["Level"].map(level_map)
+    df["Difficulty_score"] = df["Level_numeric"] * df["Rating"]
+
+    return df
+
 
 # def visualize_data(df):
 #     # Create visualizations to better understand the data
@@ -86,7 +102,9 @@ def main():
     data_frame = load_data("megaGymDataset.csv")
     explore_data(data_frame)
     distinct_df = remove_duplicates(data_frame)
-    handle_missing_values(distinct_df)
+    cleaned = handle_missing_values(distinct_df)
+    engineered = feature_engineering(cleaned)
+    print(engineered)
 
 
 if __name__ == "__main__":
