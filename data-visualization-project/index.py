@@ -17,13 +17,22 @@ def preprocess_data(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def create_static_visualizations(df: pd.DataFrame):
-    sns.set_style("darkgrid")
+    sns.set_style("dark")
 
     plt.figure(figsize=(10, 6))
-    sns.histplot(df["Score"])
+    sns.histplot(df["Score"], kde=True)
     plt.title("Distribution of Score")
     plt.xlabel("Score")
     plt.ylabel("Count")
+    plt.show()
+
+    plt.figure(figsize=(10, 6))
+    sns.barplot(x=df["Country"][:15], y=df["Generosity"][:15])
+    plt.title("Country vs. Generosity")
+    plt.xlabel("Country")
+    plt.ylabel("Generosity")
+    plt.xticks(rotation=45, ha="right")
+    plt.tight_layout()
     plt.show()
 
 
