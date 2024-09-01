@@ -16,8 +16,15 @@ def preprocess_data(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
-# def create_static_visualizations(df : pd.DataFrame):
-#     sns.set_style("darkgrid")
+def create_static_visualizations(df: pd.DataFrame):
+    sns.set_style("darkgrid")
+
+    plt.figure(figsize=(10, 6))
+    sns.histplot(df["Score"])
+    plt.title("Distribution of Score")
+    plt.xlabel("Score")
+    plt.ylabel("Count")
+    plt.show()
 
 
 # def create_interactive_visualizations(df):
@@ -27,6 +34,7 @@ def preprocess_data(df: pd.DataFrame) -> pd.DataFrame:
 def main():
     df = load_data("2019.csv")
     df = preprocess_data(df)
+    create_static_visualizations(df)
 
 
 if __name__ == "__main__":
