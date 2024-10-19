@@ -2,7 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import plotly.express as px
-import plotly.graph_objects as go
+import numpy as np
 
 
 def load_data(file_path) -> pd.DataFrame:
@@ -60,12 +60,8 @@ def create_interactive_visualizations(df: pd.DataFrame):
 
 
 def advanced_analysis(df: pd.DataFrame):
-
-    top_5 = df.nlargest(5, "Score")[["Country", "Score"]]
-    print("Top 5 happiest countries:")
-    print(top_5)
-
-    correlation = df.corr()
+    numeric_cols = df.select_dtypes(include=[np.number]).columns
+    correlation = df[numeric_cols].corr()
     plt.figure(figsize=(12, 10))
     sns.heatmap(correlation, annot=True, cmap="coolwarm", vmin=-1, vmax=1, center=0)
     plt.title("Correlation Heatmap of Features")
