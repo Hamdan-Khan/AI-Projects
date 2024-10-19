@@ -37,13 +37,27 @@ def create_static_visualizations(df: pd.DataFrame):
 
 
 # def create_interactive_visualizations(df):
-#     # Create interactive visualizations using Plotly
+# Create interactive visualizations using Plotly
+
+
+def advanced_analysis(df: pd.DataFrame):
+
+    top_5 = df.nlargest(5, "Score")[["Country", "Score"]]
+    print("Top 5 happiest countries:")
+    print(top_5)
+
+    correlation = df.corr()
+    plt.figure(figsize=(12, 10))
+    sns.heatmap(correlation, annot=True, cmap="coolwarm")
+    plt.title("Correlation Heatmap of Features")
+    plt.show()
 
 
 def main():
     df = load_data("2019.csv")
     df = preprocess_data(df)
     create_static_visualizations(df)
+    advanced_analysis(df)
 
 
 if __name__ == "__main__":
