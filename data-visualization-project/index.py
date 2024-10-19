@@ -67,7 +67,7 @@ def advanced_analysis(df: pd.DataFrame):
 
     correlation = df.corr()
     plt.figure(figsize=(12, 10))
-    sns.heatmap(correlation, annot=True, cmap="coolwarm")
+    sns.heatmap(correlation, annot=True, cmap="coolwarm", vmin=-1, vmax=1, center=0)
     plt.title("Correlation Heatmap of Features")
     plt.show()
 
