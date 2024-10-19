@@ -36,8 +36,27 @@ def create_static_visualizations(df: pd.DataFrame):
     plt.show()
 
 
-# def create_interactive_visualizations(df):
-# Create interactive visualizations using Plotly
+def create_interactive_visualizations(df: pd.DataFrame):
+    fig = px.scatter(
+        df,
+        x="GDP per capita",
+        y="Healthy life expectancy",
+        color="Score",
+        hover_name="Country",
+        title="GDP per capita vs. Healthy Life Expectancy",
+    )
+    fig.show()
+
+    fig = px.choropleth(
+        df,
+        locations="Country",
+        locationmode="country names",
+        color="Score",
+        hover_name="Country",
+        title="World Happiness Score",
+        color_continuous_scale="Viridis",
+    )
+    fig.show()
 
 
 def advanced_analysis(df: pd.DataFrame):
@@ -57,6 +76,7 @@ def main():
     df = load_data("2019.csv")
     df = preprocess_data(df)
     create_static_visualizations(df)
+    create_interactive_visualizations(df)
     advanced_analysis(df)
 
 
