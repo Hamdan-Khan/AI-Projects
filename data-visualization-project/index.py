@@ -61,6 +61,7 @@ def create_interactive_visualizations(df: pd.DataFrame):
 
 def advanced_analysis(df: pd.DataFrame):
     numeric_cols = df.select_dtypes(include=[np.number]).columns
+    numeric_cols = numeric_cols.drop("Overall rank")
     correlation = df[numeric_cols].corr()
     plt.figure(figsize=(12, 10))
     sns.heatmap(correlation, annot=True, cmap="coolwarm", vmin=-1, vmax=1, center=0)
